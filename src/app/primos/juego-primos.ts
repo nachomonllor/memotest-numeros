@@ -72,9 +72,14 @@ export class JuegoPrimos  {
 
   //pongo en negro el tablero entero
  ponerEnNegro(){
+
+   
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        this.estadoBotones[i][j] = 'black';
+         if(this.listaElegidos.indexOf(this.posiciones[i][j]) < 0 ) {
+            this.estadoBotones[i][j] = 'black';
+         }
+
       }
     }
  }
@@ -86,15 +91,17 @@ export class JuegoPrimos  {
     play = false;
     startTimer() {
       this.pauseTimer();
+      //this.time = 4;
       this.play = true;
       this.interval = setInterval(() => {
         this.time++;
-        console.log(this.time);
+        //console.log(this.time);
 
         if(this.time >= 4 || this.play == false ) {
           
           this.pauseTimer();
           this.ponerEnNegro();
+          this.numeroElegido = -1;
           this.time =0 ;
           this.play = false;
           this.contadorMostrados = 2;
@@ -107,11 +114,26 @@ export class JuegoPrimos  {
       clearInterval(this.interval);
     }
 
+    numeroElegido: number=-1;
+    listaElegidos = new Array<number>();
+
     presion(fila: number, columna: number) {
       this.time =0;
+
+      if(this.posiciones[fila][columna] == this.numeroElegido) {
+        //this.estadoBotones[fila][columna] = "white";
+        this.listaElegidos.push(this.posiciones[fila][columna] ) ;
+        this.numeroElegido = -1;
+      }
       
       if(this.contadorMostrados > 0) {
         this.estadoBotones[fila][columna] = "white";
+        this.numeroElegido = this.posiciones[fila][columna];
+        console.log("Numero Elegido: " + this.numeroElegido);
+      }
+      else{
+        this.time = 4;
+        this.ponerEnNegro();
       }
 
       this.contadorMostrados--;
