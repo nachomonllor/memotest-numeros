@@ -46,8 +46,10 @@ export class JuegoPrimos  {
     // this._timer = setInterval(() => this.contador(), 1000);
     this.totalPrimos = 0;
 
-    this.reloj = 30;
+   // this.reloj = 30;
 
+    //le digo que el indice sea el numero, y el elemento en el indice es la cantidad
+    //de veces que tiene que estar el numero
     let numerosDisponibles = new Array<number>();
     for(let i =0; i<8; i++) {
       numerosDisponibles.push(2);
@@ -64,30 +66,12 @@ export class JuegoPrimos  {
           this.posiciones[i][j] = numeroAleatorio + 1;
           numerosDisponibles[numeroAleatorio]--;
       }
-
     }
+
   }
 
-  
-  contador() {
-    //clearInterval(myVar);
-    this.reloj--;
-    if (this.reloj <= 0) {
-      this.nivel = 1;
-      this.limite = 20;
-      if (this.puntos > this.maximo_puntaje) {
-        this.maximo_puntaje = this.puntos;
-      }
-      this.puntos = 0;
-      //  clearInterval(this._timer);
-     // this.resetearColorBotones();
-      // alert('Se te acabo el tiempo');
-      this.initialize();
-    }
-  }
-
+  //pongo en negro el tablero entero
  ponerEnNegro(){
-
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
         this.estadoBotones[i][j] = 'black';
@@ -95,31 +79,50 @@ export class JuegoPrimos  {
     }
  }
 
-  presion(fila: number, columna: number) {
-   /*// if (this.listaPrimos.indexOf(this.posiciones[fila][columna]) >= 0) {
-      this.estadoBotones[fila][columna] = 'white';
-      this.totalPrimos--;
-      this.puntos += 10;
-      if (this.totalPrimos === 0) {
-       // this.resetearColorBotones();
-       // this.subirDeNivel();
-        this.initialize();
+    contadorMostrados = 2;
+ 
+    time: number = 0;
+    interval;
+    play = false;
+    startTimer() {
+      this.pauseTimer();
+      this.play = true;
+      this.interval = setInterval(() => {
+        this.time++;
+        console.log(this.time);
+
+        if(this.time >= 4 || this.play == false ) {
+          
+          this.pauseTimer();
+          this.ponerEnNegro();
+          this.time =0 ;
+          this.play = false;
+          this.contadorMostrados = 2;
       }
-    } else {
-      this.estadoBotones[fila][columna] = 'white';
-      this.reloj -= 3; // los errores cuestan tiempo
+      },200)
     }
-    */
-   this.estadoBotones[fila][columna] = 'white';
+    
+    pauseTimer() {
+      this.play = false;
+      clearInterval(this.interval);
+    }
+
+    presion(fila: number, columna: number) {
+      this.time =0;
+      
+      if(this.contadorMostrados > 0) {
+        this.estadoBotones[fila][columna] = "white";
+      }
+
+      this.contadorMostrados--;
+      this.startTimer();
+ 
+
+    }
 
 
-
-  }
-
-
+}
 
 
   
 
-
-}
