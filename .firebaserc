@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "firebaseproyecto001": {
+      "hosting": {
+        "memoprueba": [
+          "firebaseproyecto001"
+        ]
+      }
+    }
+  }
+}
