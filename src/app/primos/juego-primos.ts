@@ -39,7 +39,7 @@ export class JuegoPrimos  {
     // this._timer = setInterval(() => this.contador(), 1000);
     //this.resetearColorBotones();
     this.initialize();
-    
+    this.ponerEnNegro();
   }
   initialize() {
     //  clearInterval(this._timer);
